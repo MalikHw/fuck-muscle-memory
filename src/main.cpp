@@ -9,9 +9,11 @@ using namespace geode::prelude;
 class $modify(MenuLayer) {
     bool init() {
         if (!MenuLayer::init()) return false;
-        this->scheduleOnce([this](float) {
-            this->swapButtons();
-        }, 0.0f, "swap_buttons_key");
+        this->runAction(CCSequence::create(
+            CCDelayTime::create(0.0f),
+            CCCallFunc::create(this, callfunc_selector(MenuLayer::swapButtons)),
+            nullptr
+        ));
         return true;
     }
     void swapButtons() {
@@ -24,12 +26,10 @@ class $modify(MenuLayer) {
                 auto menuChildren = menu->getChildren();
                 for (int j = 0; j < menuChildren->count(); j++) {
                     if (auto btn = typeinfo_cast<CCMenuItemSpriteExtra*>(menuChildren->objectAtIndex(j))) {
-                        auto target = btn->getTarget();
-                        auto selector = btn->getSelector();
-                        if (target == this && selector == menu_selector(MenuLayer::onPlay)) {
+                        if (btn->m_pfnSelector == menu_selector(MenuLayer::onPlay)) {
                             playBtn = btn;
                         }
-                        else if (target == this && selector == menu_selector(MenuLayer::onCreator)) {
+                        else if (btn->m_pfnSelector == menu_selector(MenuLayer::onCreator)) {
                             creatorBtn = btn;
                         }
                     }
@@ -37,18 +37,18 @@ class $modify(MenuLayer) {
             }
         }
         if (playBtn && creatorBtn) {
-            auto textureQuality = CCDirector::sharedDirector()->loadedTextureQuality();
+            auto textureQuality = CCDirector::sharedDirector()->getLoadedTextureQuality();
             CCSize playSize, creatorSize;
             switch (textureQuality) {
-                case kCCTextureQualityLow:
+                case kTextureQualityLow:
                     playSize = CCSize(68, 68);
                     creatorSize = CCSize(106, 106);
                     break;
-                case kCCTextureQualityMedium:
+                case kTextureQualityMedium:
                     playSize = CCSize(134, 134);
                     creatorSize = CCSize(211, 209);
                     break;
-                case kCCTextureQualityHigh:
+                case kTextureQualityHigh:
                     playSize = CCSize(266, 266);
                     creatorSize = CCSize(418, 418);
                     break;
