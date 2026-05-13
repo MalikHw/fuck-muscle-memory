@@ -10,7 +10,7 @@ class $modify(MyMenuLayer, MenuLayer) {
     bool init() {
         if (!MenuLayer::init()) return false;
         this->runAction(CCSequence::create(
-            CCDelayTime::create(0.0f),
+            CCDelayTime::create(0.1f),
             CCCallFunc::create(this, callfunc_selector(MyMenuLayer::swapButtons)),
             nullptr
         ));
@@ -20,10 +20,13 @@ class $modify(MyMenuLayer, MenuLayer) {
         CCMenuItemSpriteExtra* playBtn = nullptr;
         CCMenuItemSpriteExtra* creatorBtn = nullptr;
         auto children = this->getChildren();
+        if (!children) return;
         for (int i = 0; i < children->count(); i++) {
             auto child = static_cast<CCNode*>(children->objectAtIndex(i));
+            if (!child) continue;
             if (auto menu = typeinfo_cast<CCMenu*>(child)) {
                 auto menuChildren = menu->getChildren();
+                if (!menuChildren) continue;
                 for (int j = 0; j < menuChildren->count(); j++) {
                     if (auto btn = typeinfo_cast<CCMenuItemSpriteExtra*>(menuChildren->objectAtIndex(j))) {
                         if (btn->m_pfnSelector == menu_selector(MenuLayer::onPlay)) {
