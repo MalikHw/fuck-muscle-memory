@@ -6,12 +6,12 @@ using namespace geode::prelude;
 
 
 // Why this shit has to be long? i have no fucking idea
-class $modify(MenuLayer) {
+class $modify(MyMenuLayer, MenuLayer) {
     bool init() {
         if (!MenuLayer::init()) return false;
         this->runAction(CCSequence::create(
             CCDelayTime::create(0.0f),
-            CCCallFunc::create(this, callfunc_selector(MenuLayer::swapButtons)),
+            CCCallFunc::create(this, callfunc_selector(MyMenuLayer::swapButtons)),
             nullptr
         ));
         return true;
