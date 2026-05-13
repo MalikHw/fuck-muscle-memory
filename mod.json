@@ -7,14 +7,13 @@
         "ios": "2.2081"
     },
     "version": "1.0.0",
-    "id": "MalikHw.fuck-muscle-memory",
-    "name": "fuck-muscle-memory",
-    "developer": "MalikHw",
-    "description": "desc.",
-    "tags": ["yes", "yeah"],
+    "id": "malikhw.swap-main-and-editor",
+    "name": "Swap main and Editor buttons",
+    "developer": "MalikHw47",
+    "description": "Swap main and Editor buttons on the main menu",
+    "tags": ["offline", "customization"],
     "links": {
         "source": "https://github.com/MalikHw/fuck-muscle-memory",
         "community": "https://discord.gg/G9bZ92eg2n"
-    },
-    "settings": {}
+    }
 }
